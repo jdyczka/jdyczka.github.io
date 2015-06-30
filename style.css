@@ -4,12 +4,12 @@
 
 @font-face {
     font-family: Walkway;
-    src: url(walkway_semibold.ttf);
+    src: url(Walkway_SemiBold.ttf);
 }
 
 @font-face {
     font-family: Walkway;
-    src: url(walkway_ultrabold.ttf);
+    src: url(Walkway_UltraBold.ttf);
     font-weight: bold;
 }
 
@@ -19,7 +19,7 @@ html {
 }
 body {
 	background-color: #FFF;
-	font-family: walkway, serif;
+	font-family: walkway, "open sans", sans-serif;
 	line-height: 150%;
 	height: 100%;
 }
@@ -60,7 +60,7 @@ footer p {
 	display: inline;
 }
 a {
-	font-family: walkway;
+	font-family: walkway, "open sans", sans-serif;
 	font-size: 150%;
 	font-weight: bold;
 	text-decoration: none;
