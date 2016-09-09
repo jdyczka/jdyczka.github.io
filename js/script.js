@@ -27,52 +27,32 @@ $(function() {
 
 
 
-//shrink navbar
-$(window).scroll(function() {
-  if ($(document).scrollLeft() > 300) {
-    $('.nav').addClass('shrink');
-  } else {
-    $('.nav').removeClass('shrink');
-  }
-});
-$(window).scroll(function() {
-  if ($(document).scrollLeft() > 10) {
-    $('.bg-image').addClass('shrink');
-  } else {
-    $('.bg-image').removeClass('shrink');
-  }
-});
-
-
 
 //highlight current section
-var sections = [];
-sections.push($("#home"), $("#skills"), $("#portfolio"), $("#contact"));
-
-var activeSectionIndex = 0;
-
-var menuItems = [];
-menuItems = $(".nav a");
+var menuItems = $(".nav a");
 
 $(window).on('DOMContentLoaded load resize scroll', function() {
   $.each(menuItems, function(i, item) {
-    if (item.classList) {
-      item.classList.remove("active")
-    }
+    $(item).removeClass('active');
   });
 
   var scroll = $(window).scrollLeft();
-  var vw = $("#skills")[0].clientWidth / 100
+  var b = [
+    $('#skills').offset().left + 130, 
+    $('#portfolio').offset().left + 100, 
+    $('#contact').offset().left + 100
+  ]
 
-  for (var i=0; i<sections.length; i++) { 
-
-    var sectionLeft = sections[i].offset().left; 
-    var sectionRight = sectionLeft+sections[i].outerWidth();
-
-    if( (scroll >= sectionLeft-400) && (scroll <= sectionRight-398)) { //100, 98 - margines
-      menuItems[i].setAttribute("class", "active");
-      activeSectionIndex = i;
-      break;
-    }
-  }
+  if(scroll < b[0]) $(menuItems[0]).addClass('active');
+  else if(scroll >= b[0] && scroll < b[1]) $(menuItems[1]).addClass('active');
+  else if(scroll >= b[1] && scroll < b[2]) $(menuItems[2]).addClass('active');
+  else $(menuItems[3]).addClass('active');
+  
 }); 
+
+
+
+$(window).on('load resize', function() {
+  var pos = $('#home').width() - 100;
+  $('body').css('background-position',  pos + 'px');
+});
