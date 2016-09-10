@@ -29,10 +29,20 @@
 
 		$('.menu a').click(function(ev) {
 			ev.preventDefault();
-			playWord($('.menu input').val().toUpperCase());
+			var inputWord = $('.menu input').val().toUpperCase();
+			$('.menu input').val('');
+			playWord(inputWord);
 		});
 
-		//playWord('PROGRAMMING')
+		$(document).keypress(function(event) {
+			if(event.which == 13 && $('.menu input').val() != '') {
+				var inputWord = $('.menu input').val().toUpperCase();
+				$('.menu input').val('');
+				playWord(inputWord);
+			}
+
+		});
+
 
 		function playWord(word) {
 			var waterLevel = $(window).height()/20;
@@ -58,6 +68,11 @@
 
 			$('.letters > div').click(handleClicks);
 			$(document).keydown(handleKeys);
+
+
+			$('.infoBox').click(function() {
+				location.reload();
+			});
 
 
 			function checkLetter(letter) {
