@@ -1,0 +1,156 @@
+* {
+  	box-sizing: border-box;
+}
+@font-face {
+    font-family: hagin;
+    src: url(Hagin-Caps-Thin.otf);
+}
+@font-face {
+    font-family: hagin-md;
+    src: url(Hagin-Caps-Medium.otf);
+}
+@font-face {
+    font-family: bariol;
+    src: url(Bariol_Regular_Italic.otf);
+}
+html {
+	font: 100 20px/30px open sans, sans-serif;
+	height: 100%;
+	width: 100%;
+}
+body {
+	font: 100 20px/30px open sans, sans-serif;
+	display: flex;
+	flex-flow: column-reverse;
+	height: 100%;
+}
+.menu {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	height: 80px;
+	background: white;
+	box-shadow: 0 1px 10px 1px rgba(0,0,0,.2);
+	display: flex;
+	align-items: center;
+	padding-left: 40px;
+	line-height: 80px;
+}
+.menu input {
+	width: 200px;
+	height: 40px;
+	line-height: 40px;
+	font-size: 30px;
+	letter-spacing: 200%;
+	vertical-align: middle;
+
+}
+.menu a {
+	text-decoration: none;
+	display: inline-block;
+	height: 40px;
+	min-width: 60px;
+	line-height: 40px;
+	padding: 0 20px;
+	background: #92D6D7;
+	color: white;
+	font-weight: normal;
+	vertical-align: -2px;
+}
+
+.letters {
+	order: 4;
+	margin: 0 auto;
+}
+	.letters > div {
+		display: inline-block;
+		width: 30px;
+		text-align: center;
+		font-size: 20px;
+		cursor: pointer;
+	}
+	.letters > div.letterUsed {
+		opacity: .2;
+		cursor: default;
+	}
+
+.dashes {
+	order: 3;
+	margin: 0 auto;
+	display: flex;
+	align-items: flex-end;
+	height: 100px;
+}
+	.dashes > div {
+		width: 20px;
+		height: 25px;
+		margin-right: 10px;
+		border-bottom: 1px solid black;
+		text-align: center;
+		vertical-align: bottom;
+		font-size: 20px;
+	}
+
+.water {
+	order: 2;
+	height: 50vh;
+	display: flex;
+}
+	.waterLevel {
+		align-self: flex-end;
+		position: relative;
+		width: 100%;
+		height: 5vh;
+		background: rgba(37, 174, 176, .5);
+		transition: height 2s ease-in;
+	}
+	@keyframes wavy {
+		from {background-position: left;}
+		to {background-position: 60px;}
+	}
+	.waterLevel:before {
+		content: "";
+		display: block;
+		height: 15px; 
+		width: 100%;
+		position: absolute;
+		top: -15px;
+		background: url(images/fala.svg) left bottom repeat;
+		opacity: .5;
+		background-size: auto 15px;
+		animation: wavy 0 linear infinite;
+	}
+
+.sand {
+	order: 1;
+	background: url(images/sand.svg) left top no-repeat;
+	width: 100%;
+	height: 100px;
+}
+
+.infoBox {
+	background: rgba(0,0,0,.3);
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	align-items: center;
+	opacity: 0;
+	display: none;
+}
+	.infoBox > div {
+		text-align: center;
+		width: 300px;
+		height: 150px;
+		margin: 0 auto;
+		background: white;
+		display: flex;
+		align-items: center;
+	}
+	.info {
+		margin: 0 auto;
+	}
+	.showMsg {
+		display: flex;
+		opacity: 1;
+		transition: opacity 3s 3s;
+	}

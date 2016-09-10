@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="height=device-height" />
+  	<meta charset="utf-8">
+ 	<title>DROWNMAN</title>
+  	<link type="text/css" rel="stylesheet" href="reset.css">
+ 	<link type="text/css" rel="stylesheet" href="style.css">
+</head>
+<body>
+ 	<div class="menu">
+ 		<div>
+ 			PLAY YOUR WORD: 
+ 			<input type="password" name="">
+ 			<a href="">GO</a>
+ 		</div>
+ 	</div>
+ 	<div class="letters"></div>
+ 	<div class="dashes"></div>
+ 	<div class="water">
+ 		<div class="waterLevel"></div>
+ 	</div>
+ 	<div class="sand"></div>
+ 	<div class="infoBox">
+ 		<div><p class="info"></p></div>
+ 	</div>
+	<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+	<script>
+
+		$('.menu a').click(function(ev) {
+			ev.preventDefault();
+			playWord($('.menu input').val().toUpperCase());
+		});
+
+		//playWord('PROGRAMMING')
+
+		function playWord(word) {
+			var waterLevel = $(window).height()/20;
+			var over = false;
+			var lettersLeft = word.length;
+			var msg = 'YAY, YOU WON<br>Congratulations!';
+
+			(function makeLetters() {
+				var lettersContent = "";
+				for (var i = 65; i <= 90; i++) {
+					lettersContent += '<div>&#' + i + '</div>';
+				}
+				$('.letters').html(lettersContent);
+			})();
+
+			(function makeDashes() {
+				var dashesContent = "";
+				for (var i = 0; i < word.length; i++) {
+					dashesContent += '<div></div>';
+				}
+				$('.dashes')[0].innerHTML = dashesContent;
+			})();
+
+			$('.letters > div').click(handleClicks);
+			$(document).keydown(handleKeys);
+
+
+			function checkLetter(letter) {
+				var found = false;
+				for(var i = 0; i < word.length; i++) {
+					if(word.substr(i,1) === letter) {
+						$('.dashes > div')[i].innerHTML = letter;
+						found = true;
+						lettersLeft--;
+					}
+				}
+				if(!found) {
+					waterLevel += $(window).height()/20;
+					$('.waterLevel').height(waterLevel);
+				}
+			}
+			function handleClicks() {
+				if(!$(this).hasClass('letterUsed')) {
+					$(this).addClass('letterUsed');
+					checkLetter(this.innerHTML);
+					checkIfOver();
+				}
+			}
+			function handleKeys(event) {
+				var letterCode = event.which;
+				if(letterCode >= 65 && letterCode <= 90) {
+					var letterDiv = '.letters > div:nth-child(' + (letterCode - 64) +')';
+					if(!$(letterDiv).hasClass('letterUsed')) {
+						$(letterDiv).addClass('letterUsed');
+						checkLetter(String.fromCharCode(letterCode));
+						checkIfOver();
+					}
+				}
+			}
+			function checkIfOver() {
+				if(waterLevel >= $('.water').height()) {
+					over = true;
+					msg = 'YOU LOST<br>Next time you\'ll get it!';
+				}
+				if(over || lettersLeft == 0) {
+					$('.letters > div').off('click', handleClicks);
+					$(document).off('keydown', handleKeys);
+					$('.info').html(msg);
+					$('.infoBox').addClass('showMsg');
+				}
+			}
+		}
+
+
+	</script>
+
+</html>
