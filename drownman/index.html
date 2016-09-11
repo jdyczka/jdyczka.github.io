@@ -26,6 +26,13 @@
  	</div>
 	<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
 	<script>
+		jQuery.extend(jQuery.expr[':'], {
+			focus: "a == document.activeElement"
+		});
+
+		var initialWaterLevel = $(window).height()/20;
+
+		$('.menu input').focus();
 
 		$('.menu a').click(function(ev) {
 			ev.preventDefault();
@@ -37,18 +44,19 @@
 		$(document).keypress(function(event) {
 			if(event.which == 13 && $('.menu input').val() != '') {
 				var inputWord = $('.menu input').val().toUpperCase();
-				$('.menu input').val('');
+				resetGame();
 				playWord(inputWord);
 			}
-
 		});
 
 
 		function playWord(word) {
-			var waterLevel = $(window).height()/20;
+			var waterLevel = initialWaterLevel;
 			var over = false;
 			var lettersLeft = word.length;
 			var msg = 'YAY, YOU WON<br>Congratulations!';
+
+			$('.menu input').blur();
 
 			(function makeLetters() {
 				var lettersContent = "";
@@ -71,7 +79,7 @@
 
 
 			$('.infoBox').click(function() {
-				location.reload();
+				resetGame();
 			});
 
 
@@ -98,7 +106,7 @@
 			}
 			function handleKeys(event) {
 				var letterCode = event.which;
-				if(letterCode >= 65 && letterCode <= 90) {
+				if(letterCode >= 65 && letterCode <= 90 && !($('.menu input').is(':focus'))) {
 					var letterDiv = '.letters > div:nth-child(' + (letterCode - 64) +')';
 					if(!$(letterDiv).hasClass('letterUsed')) {
 						$(letterDiv).addClass('letterUsed');
@@ -119,6 +127,17 @@
 					$('.infoBox').addClass('showMsg');
 				}
 			}
+		}
+
+		function resetGame() {
+			$('.waterLevel').height(initialWaterLevel);
+			$('.letters').html('');
+			$('.dashes').html('');
+			$('.menu input').val('');
+			$('.menu input').focus();
+			$('.letters > div').off('click');
+			$(document).off('keydown');
+			$('.infoBox').removeClass('showMsg');
 		}
 
 
