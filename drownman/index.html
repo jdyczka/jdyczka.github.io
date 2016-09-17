@@ -99,7 +99,7 @@
 			ev.preventDefault();
 			resetGame();
 			var i = Math.floor(Math.random() * words.length);
-			playWord(words[i].substring(0,words[i].length-1).toUpperCase());
+			playWord(words[i].toUpperCase());
 			words.splice(i,1);
 		});
 
