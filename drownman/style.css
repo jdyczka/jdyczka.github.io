@@ -286,7 +286,8 @@ body {
 	}
 }
 
-@media 	screen and (max-height: 700px) {
+@media 	screen and (max-height: 700px),
+		screen and (max-width: 960px) {
 	.sand {
 		height: 50px;
 	}
