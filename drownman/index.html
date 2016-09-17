@@ -113,7 +113,7 @@
 
 
 		function playWord(word) {
-			console.log(word);
+			console.log(word + ' ' + word.length);
 			var tries = 12 - 2*difficulty;
 			var waterLevel = initialWaterLevel;
 			var waterLevelIncrease = ($('.water').height() - initialWaterLevel) / tries;
