@@ -174,7 +174,7 @@ body {
 
 .sand {
 	order: 1;
-	background: url(images/sand.svg) left top no-repeat;
+	background: url(images/sand.svg) left top repeat no-repeat;
 	background-size: cover;
 	width: 100%;
 	height: 100px;
@@ -286,8 +286,7 @@ body {
 	}
 }
 
-@media 	screen and (max-height: 700px),
-		screen and (max-width: 960px) {
+@media 	screen and (max-height: 600px) and (max-width: 960px) {
 	.sand {
 		height: 50px;
 	}
