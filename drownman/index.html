@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta name="viewport" content="height=device-height" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
   	<meta charset="utf-8">
  	<title>DROWNMAN</title>
   	<link type="text/css" rel="stylesheet" href="reset.css">
  	<link type="text/css" rel="stylesheet" href="style.css">
+ 	<link rel="shortcut icon" href="images/favicon.png" >
 </head>
 <body>
- 	<div class="menu">
- 		<div>
+ 	<div class="menu visible">
+ 		<div class="label">NEW GAME</div>
+ 		<div class="newGame">
 	 		<div class="ownWord">
 	 			PLAY MY WORD:
 	 			<input type="password" name="">
@@ -22,15 +24,17 @@
 	 	</div>
  		<div class="difficulty">
  			DIFFICULTY: 
- 			<img id='d1' src="images/starfish1.svg">
- 			<img id='d2' src="images/starfish0.svg">
- 			<img id='d3' src="images/starfish0.svg">
+ 			<div id='d1'></div>
+ 			<div id='d2'></div>
+ 			<div id='d3'></div>
  		</div>
  	</div>
  	<div class="letters"></div>
  	<div class="dashes"></div>
  	<div class="water">
- 		<div class="waterLevel"></div>
+ 		<div class="waterLevel stopFlow">
+ 			<img src="images/stop.svg">
+ 		</div>
  	</div>
  	<div class="sand"></div>
  	<div class="infoBox">
@@ -42,6 +46,36 @@
 			focus: "a == document.activeElement"
 		});
 
+		$('.waterLevel img').click(function() {
+			var wl = $('.waterLevel');
+			wl.toggleClass('stopFlow');
+			if(wl.hasClass('stopFlow')) {
+				$(this).attr('src', 'images/start.svg');
+			} else {
+				$(this).attr('src', 'images/stop.svg');
+			}
+		});
+
+		$('.menu .label').click(function() {
+			$(this).parent().toggleClass('visible');
+		})
+
+		$('#d1').click(function() {
+			difficulty = 1;
+			$('#d2').css('background-color', '#aaa');
+			$('#d3').css('background-color', '#aaa');
+		});
+		$('#d2').click(function() {
+			difficulty = 2;
+			$(this).css('background-color', '#F67845');
+			$('#d3').css('background-color', '#aaa');
+		});
+		$('#d3').click(function() {
+			difficulty = 3;
+			$('#d2').css('background-color', '#F67845');
+			$(this).css('background-color', '#D33B33');
+		});
+
 		var initialWaterLevel = $('.waterLevel').height();
 		var difficulty = 1;
 		var words = [];
@@ -50,24 +84,7 @@
     		words = data.split("\n");
     	});
 
-		$('#d1').click(function() {
-			difficulty = 1;
-			$(this).attr('src', 'images/starfish1.svg');
-			$('#d2').attr('src', 'images/starfish0.svg');
-			$('#d3').attr('src', 'images/starfish0.svg');
-		});
-		$('#d2').click(function() {
-			difficulty = 2;
-			$('#d1').attr('src', 'images/starfish1.svg');
-			$(this).attr('src', 'images/starfish2.svg');
-			$('#d3').attr('src', 'images/starfish0.svg');
-		});
-		$('#d3').click(function() {
-			difficulty = 3;
-			$('#d1').attr('src', 'images/starfish1.svg');
-			$('#d2').attr('src', 'images/starfish2.svg');
-			$(this).attr('src', 'images/starfish3.svg');
-		});
+    	resetGame();
 
 		$('.menu .ownWord input').focus();
 
@@ -82,7 +99,7 @@
 			ev.preventDefault();
 			resetGame();
 			var i = Math.floor(Math.random() * words.length);
-			playWord(words[i].toUpperCase());
+			playWord(words[i].substring(0,words[i].length-1).toUpperCase());
 			words.splice(i,1);
 		});
 
@@ -96,6 +113,7 @@
 
 
 		function playWord(word) {
+			console.log(word);
 			var tries = 12 - 2*difficulty;
 			var waterLevel = initialWaterLevel;
 			var waterLevelIncrease = ($('.water').height() - initialWaterLevel) / tries;
@@ -104,6 +122,7 @@
 			var msg = 'YAY, YOU WON<br>Congratulations!';
 
 			$('.menu .ownWord input').blur();
+			$('.menu').removeClass('visible');
 
 			(function makeLetters() {
 				var lettersContent = "";
@@ -185,6 +204,7 @@
 			$('.letters > div').off('click');
 			$(document).off('keydown');
 			$('.infoBox').removeClass('showMsg');
+			$('.menu').addClass('visible');
 		}
 
 
