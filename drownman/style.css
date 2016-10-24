@@ -2,12 +2,12 @@
   	box-sizing: border-box;
 }
 html {
-	font: 100 20px/30px open sans, sans-serif;
+	font: 100 20px/30px 'Open Sans Light', sans-serif;
 	height: 100%;
 	width: 100%;
 }
 body {
-	font: 100 20px/30px open sans, sans-serif;
+	font: 100 20px/30px 'Open Sans Light', sans-serif;
 	display: flex;
 	flex-flow: column-reverse;
 	height: 100%;
@@ -42,7 +42,7 @@ body {
 		padding: 0;
 		background: #92D6D7;
 		color: white;
-		font-weight: normal;
+		font-family: 'Open Sans';
 		text-align: center;
 		vertical-align: -2px;
 	}
