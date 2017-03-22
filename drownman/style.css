@@ -11,6 +11,7 @@ body {
 	display: flex;
 	flex-flow: column-reverse;
 	height: 100%;
+	overflow: hidden;
 }
 .menu {
 	position: fixed;
@@ -144,24 +145,40 @@ body {
 		background: rgba(37, 174, 176, .5);
 		transition: height 2s ease-in;
 	}
-	@keyframes wavy {
-		0% {background-position: 0, 7px;}
-		50% {background-position: 7px, -7px;}
-		100% {background-position: 0, 7px;}
+	@keyframes wave-1 {
+		0%   { transform: translate(0); }
+		50%  { transform: translate(6px); }
+		100% { transform: translate(0); }
 	}
-	.waterLevel:before {
+	@keyframes wave-2 {
+		0%   { transform: translate(0); }
+		50%  { transform: translate(-3px); }
+		100% { transform: translate(0); }
+	}
+	.waterLevel:before,
+	.waterLevel:after {
 		content: "";
 		display: block;
 		height: 15px; 
-		width: 100%;
+		width: 110%;
 		position: absolute;
 		top: -15px;
-		background: url(images/fala1.svg) left bottom repeat,
-					url(images/fala2.svg) left bottom repeat;
+		left: -15px;
+		background-position: left bottom;
+		background-repeat: repeat;
 		opacity: .5;
 		background-size: auto 15px;
 		animation: wavy 3s linear infinite;
 	}
+		.waterLevel:before {
+			background-image: url(images/fala1.svg);
+			animation: wave-1 3.5s linear infinite;
+		}
+		.waterLevel:after {
+			background-image: url(images/fala2.svg);
+			animation: wave-2 3.3s linear infinite;
+		}
+
 		.stopFlow.waterLevel:before {
 			animation: none;
 		}
