@@ -4,7 +4,13 @@
 	<title></title>
 	<link rel="stylesheet" type="text/css" href="reset.css">
 	<style>
-		html { background: #999; }
+		html { 
+			background: #999; 
+			overflow: 
+			hidden; 
+			width: 360px; 
+			height: 48px;
+		}
 
 		img { max-width: 100%; }
 
@@ -62,8 +68,9 @@
 	<script>
 		$(window).on( 'load', function() {
 
-			console.log($('#audio-1'));
-			$('.current-audio')[0].play();
+			$('.bar').on( 'click', function() {
+				$('.current-audio')[0].play();
+			});
 
 			$('#pause').on( 'click', function() {
 				$('.current-audio')[0].pause();
