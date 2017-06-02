@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="reset.css">
+	<style>
+		html { background: #999; }
+
+		img { max-width: 100%; }
+
+		.bar {
+			width: 360px;
+			height: 48px;
+		}
+
+		ul {
+			float: right;
+			height: 48px;
+		}
+			ul:before {
+				content: '';
+				width: 0;
+				height: 100%;
+				display: inline-block;
+				vertical-align: middle;
+			}
+
+		ul li {
+			display: inline-block;
+			vertical-align: middle;
+			height: 24px;
+			width: 24px;
+		}
+
+	</style>
+
+</head>
+<body>
+	<div class="bar">
+		<div class="audios"> 
+			<audio id="audio-1" class="current-audio">
+				<source src="http://jdyczka.github.io/prototype/music/01-Green_Day-American_Idiot.mp3" type="audio/mpeg">
+			</audio>
+			<audio id="audio-2">
+				<source src="http://jdyczka.github.io/prototype/music/03. Myslovitz - Bar Mleczny Korova.mp3" type="audio/mpeg">
+			</audio>
+			<audio id="audio-3">
+				<source src="http://jdyczka.github.io/prototype/music/10. Myslovitz - Chciałbym Umrzeć Z Miłości.mp3" type="audio/mpeg">
+			</audio>
+		</div>
+		<ul>
+			<li id="loop" ><img src="images/loop.png"></li>
+			<li id="prev" ><img src="images/prev.png"></li>
+			<li id="pause"><img src="images/pause.png"></li>
+			<li id="play" style="display: none;"><img src="images/play.png"></li>
+			<li id="next" ><img src="images/next.png"></li>
+			<li id="stop" ><img src="images/stop.png"></li>
+		</ul>
+	</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script>
+		$(window).on( 'load', function() {
+
+			console.log($('#audio-1'));
+			$('.current-audio')[0].play();
+
+			$('#pause').on( 'click', function() {
+				$('.current-audio')[0].pause();
+				$(this).hide();
+				$('#play').show();
+			});
+
+			$('#play').on( 'click', function() {
+				$('.current-audio')[0].play();
+				$(this).hide();
+				$('#pause').show();
+			});
+
+			$('#stop').on( 'click', function() {
+				$('.current-audio')[0].pause();
+				$('.current-audio')[0].currentTime = 0;
+				$('#pause').hide();
+				$('#play').show();
+			});
+
+			$('#next').on( 'click', function() {
+				$('.current-audio')[0].pause();
+				$('.current-audio')[0].currentTime = 0;
+				$prev = $('.current-audio').removeClass('current-audio');
+				$next = $prev.next();
+				if ( $prev.is(':last-child') ) {
+					$next = $prev.siblings().first();
+				}
+				$next.addClass('current-audio');
+				$('.current-audio')[0].play();
+			});
+
+			$('#prev').on( 'click', function() {
+				$('.current-audio')[0].pause();
+				$('.current-audio')[0].currentTime = 0;
+				$prev = $('.current-audio').removeClass('current-audio');
+				$next = $prev.prev();
+				if ( $prev.is(':first-child') ) {
+					$next = $prev.siblings().last();
+				}
+				$next.addClass('current-audio');
+				$('.current-audio')[0].play();
+			});
+		});
+
+	</script>
+
+</body>
+</html>
